@@ -7,17 +7,24 @@ public class GroundCheck : MonoBehaviour {
     [SerializeField]
     private Player player;
     [SerializeField]
-    LayerMask groundLayer;
+    private GameObject groundTagObject;
+
+    private string groundTagString;
 
     private void Awake() {
         player = GetComponentInParent<Player>();
+
+        groundTagString = groundTagObject.name;
     }
 
     private void OnTriggerEnter(Collider other) {
-        
+
+        Debug.Log(groundTagString);
+        Debug.Log(other.gameObject.tag);
+
         if (other.gameObject ==  player.gameObject) {
             return;
-        } else {
+        } else if (other.gameObject.tag == groundTagString) {
             player.IsGrounded = true;
         }
     }
@@ -26,7 +33,7 @@ public class GroundCheck : MonoBehaviour {
 
         if (other.gameObject == player.gameObject) {
             return;
-        } else {
+        } else if (other.gameObject.tag == groundTagString) {
             player.IsGrounded = false;
         }
     }
@@ -35,7 +42,7 @@ public class GroundCheck : MonoBehaviour {
 
         if (other.gameObject == player.gameObject) {
             return;
-        } else {
+        } else if (other.gameObject.tag == groundTagString) {
             player.IsGrounded = true;
         }
     }
