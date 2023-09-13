@@ -25,6 +25,8 @@ public class PlayerIdleState : PlayerGroundedState {
     public override void LogicUpdate() {
         base.LogicUpdate();
 
+        player.Move(new Vector2(0f, 0f));
+
         if (input.x != 0f || input.y != 0f) {
 
             stateMachine.SwitchState(player.MoveState);

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerDodgeState : PlayerGroundedState {
 
-    private float dodgeTimer;
     public PlayerDodgeState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName) {
 
     }
@@ -16,7 +15,6 @@ public class PlayerDodgeState : PlayerGroundedState {
     public override void Enter() {
         base.Enter();
 
-        dodgeTimer = playerData.dodgeTimer;
         player.Dodge();
     }
 

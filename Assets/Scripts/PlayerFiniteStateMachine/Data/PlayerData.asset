@@ -16,8 +16,8 @@ MonoBehaviour:
   ySensitivity: 30
   lookDownClamp: -10
   lookUpClamp: 5
-  moveSpeed: 7.5
+  moveSpeed: 10
   jumpForce: 1
-  jumpTimer: 2
-  dodgeForce: 10
-  dodgeTimer: 2
+  jumpResetTimer: 2
+  dodgeForce: 5
+  dodgeResetTimer: 2

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,10 +26,13 @@ public class Player : MonoBehaviour {
     public PlayerInputHandler InputHandler { get; private set; }
     public Rigidbody RB { get; private set; }
     public Vector3 CurrentVelocity { get; private set; }
+    public bool IsDodging { get; private set; }
+    public bool CanDodge { get; private set; } = true;
+    public bool CanJump { get; private set; } = true;
+
 
     // Public Getters, Public Setters
     public bool IsGrounded { get; set; }
-    public bool IsDodging { get; set; }
 
     [SerializeField]
     private PlayerData playerData;
@@ -37,12 +41,15 @@ public class Player : MonoBehaviour {
     private Vector3 velocityWorkspace;
     private Vector3 movingDirection;
     private float playerSpeed;
+    private float jumpTimer;
+    private float dodgeTimer;
 
     // Player Rotation Variables
     private Vector3 forwardRelative;
     private Vector3 rightRelative;
     private Vector3 forward;
     private Vector3 right;
+
 
     private void Awake() {
 
@@ -66,15 +73,26 @@ public class Player : MonoBehaviour {
         StateMachine.Initialize(IdleState);
 
         playerSpeed = playerData.moveSpeed;
+
+        Debug.Log(CanJump);
     }
 
     private void Update() {
 
         CurrentVelocity = RB.velocity;
 
-        StateMachine.CurrentState.LogicUpdate();
+        ResetActions();
 
-        Debug.LogError(IsGrounded);
+        StateMachine.CurrentState.LogicUpdate();
+    }
+
+    private void ResetActions() {
+        if (CanJump!) {
+            
+        }
+        if (CanDodge!) {
+        
+        }
     }
 
     private void FixedUpdate() {
@@ -96,10 +114,10 @@ public class Player : MonoBehaviour {
         movingDirection = forwardRelative + rightRelative;
         // Apply move speed before setting x and z, or it will apply speed to jump.
         velocityWorkspace = movingDirection * playerSpeed; 
-        velocityWorkspace.Set(velocityWorkspace.x, RB.velocity.y, velocityWorkspace.z);      
+        velocityWorkspace.Set(velocityWorkspace.x, 0, velocityWorkspace.z);      
         velocityWorkspace = (velocityWorkspace - CurrentVelocity);
 
-        RB.AddForce(velocityWorkspace, ForceMode.VelocityChange);
+        RB.AddForce(velocityWorkspace);
     }
 
     public void SetRotation(Vector2 lookInput) {
@@ -120,8 +138,11 @@ public class Player : MonoBehaviour {
     public void Jump() {
 
         if (IsGrounded) {
-            Vector3 jumpForce = Vector3.up * playerData.jumpForce;
-            RB.AddForce(jumpForce, ForceMode.VelocityChange);
+            /*Vector3 jumpForce = Vector3.up * playerData.jumpForce;
+            RB.AddForce(jumpForce, ForceMode.VelocityChange);*/
+
+            velocityWorkspace.Set(0, playerData.jumpForce, 0);
+            RB.AddForce(velocityWorkspace, ForceMode.VelocityChange);
         }
     }
 

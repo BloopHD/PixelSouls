@@ -23,8 +23,8 @@ public class PlayerData : ScriptableObject {
     // Used Currently
     public float moveSpeed = 5f;
     public float jumpForce = 5f;
-    public float jumpTimer = 2f;
+    public float jumpResetTimer = 2f;
     public float dodgeForce = 5f;
-    public float dodgeTimer = 2f;
+    public float dodgeResetTimer = 2f;
 
 }
